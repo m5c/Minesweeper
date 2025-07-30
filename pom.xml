@@ -2,8 +2,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jetuml</groupId>
-    <artifactId>jetuml</artifactId>
+    <groupId>ca.mcgill.cs.swevo</groupId>
+    <artifactId>minesweeper</artifactId>
     <packaging>jar</packaging>
     <version>1.0</version>
     <name>Minesweeper</name>
@@ -24,24 +24,25 @@
     <licenses>
         <license>
             <name>GPL-3</name>
-            <url>https://github.com/prmr/JetUML/blob/master/LICENSEE</url>
+            <url>https://github.com/prmr/Minesweeper/blob/master/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
 
     <dependencies>
+        <!--Two dependencies for JavaFx-->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-swing</artifactId>
             <version>24.0.2</version>
         </dependency>
 
+        <!-- Dependency for testing with JUnit 5-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -52,9 +53,11 @@
 
     <build>
         <!-- Override default name of generated jars -->
-        <finalName>MineSweeper</finalName>
+        <finalName>Minesweeper</finalName>
 
         <!-- Override source location (default for maven is src/main/java)-->
+        <!-- This is needed to preserve the option to build this project without maven. It advises maven to search
+        sources and test classes exactly where they are in a standard java project -->
         <sourceDirectory>${src.dir}</sourceDirectory>
         <testSourceDirectory>${testsrc.dir}</testSourceDirectory>
 
@@ -68,10 +71,12 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+            <!-- The javafx maven plugin has two executions (think of it like a lever that allows to toggle between standard launch and debugging.-->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.plugin.version}</version>
+                <!--  To run (without debugger), use: mvn clean javafx:run@run-->
                 <executions>
                     <execution>
                         <id>run</id>
@@ -79,8 +84,9 @@
                             <mainClass>minesweeper/ca.mcgill.cs.swevo.minesweeper.Minesweeper</mainClass>
                         </configuration>
                     </execution>
-                    <!--                    To debug the application, add a remote debugger to port 8000 and start this application with: "mvn clean javafx:run@debug"-->
-                    <!--                    See: https://stackoverflow.com/a/61341407/13805480-->
+                    <!-- To run (without debugger), use: mvn clean javafx:run@debug -->
+                    <!-- You then need to attach a remote debugger -->
+                    <!-- See: https://stackoverflow.com/a/61341407/13805480-->
                     <execution>
                         <id>debug</id>
                         <configuration>
@@ -93,6 +99,7 @@
                 </executions>
             </plugin>
 
+            <!-- The shade plugin is needed to create a "self-contained" jar, that is, a jar with all dependencies included.-->
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.0</version>
