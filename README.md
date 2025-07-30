@@ -30,8 +30,8 @@ The project should then build properly.
 * Compiling: `mvn clean compile`
 * Testing: `mvn clean test`
 * Packaging: `mvn clean package`
-
  > Packaging creates a JAR-with-all-dependencies in `target/Minesweeper.jar`. Can be started with `java -jar target/Minesweeper.jar`
+* Building an OS-native app: `mvn clean package -Pnative`
 
 ## Running
 
