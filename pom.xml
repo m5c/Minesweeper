@@ -7,7 +7,7 @@
     <packaging>jar</packaging>
     <version>1.0</version>
     <name>Minesweeper</name>
-    <url>https://github.com/prmr/JetUML</url>
+    <url>https://github.com/prmr/Minesweeper</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,6 +16,7 @@
         <java.version>17</java.version>
         <javafx.version>24.0.2</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+        <!-- Override default location of maven source and test classes, so the match standard java project structure.-->
         <src.dir>src</src.dir>
         <testsrc.dir>test</testsrc.dir>
     </properties>
@@ -121,7 +122,68 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
 
+            <!-- Enforces respecting checkstyle as part of validate phase (pre compile)-->
+            <!-- TODO: Figure out where "module GenericIllegalRegexp" is defined. Plugin cannot parse config.-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
+            <!--                <version>3.6.0</version>-->
+            <!--                <configuration>-->
+            <!--                    <configLocation>config/Style.xml</configLocation>-->
+            <!--                    <consoleOutput>true</consoleOutput>-->
+            <!--                    <violationSeverity>warning</violationSeverity>-->
+            <!--                    <failOnViolation>true</failOnViolation>-->
+            <!--                    <failsOnError>true</failsOnError>-->
+            <!--                    <linkXRef>false</linkXRef>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>validate</id>-->
+            <!--                        <phase>validate</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>check</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
+        </plugins>
     </build>
+
+    <profiles>
+        <!--Build profile for building native application. Is deactivated by default. To activate, use -Pnative-->
+        <profile>
+            <id>native</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Builds a native app based on the hosts OS at package phase: https://github.com/javapackager/JavaPackager-->
+                    <plugin>
+                        <groupId>io.github.fvarrui</groupId>
+                        <artifactId>javapackager</artifactId>
+                        <version>1.7.6</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- mandatory -->
+                                    <mainClass>ca.mcgill.cs.swevo.minesweeper.ShadeMinesweeper</mainClass>
+                                    <!-- optional -->
+                                    <bundleJre>true</bundleJre>
+                                    <generateInstaller>true</generateInstaller>
+                                    <administratorRequired>false</administratorRequired>
+                                    <platform>auto</platform>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
