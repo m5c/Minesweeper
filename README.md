@@ -39,20 +39,20 @@ The project should then build properly.
 
 #### Slim JAR
 
-Building a slim JAR will *not* include transitive dependencies.
+Building a slim JAR will *not* include transitive dependencies.  
+To build a slim JAR, use: `mvn clean package`
 
 * The jar will be smaller
 * You have to manually place javafx on the classpath, for the jar to run
 
-Building:  
-`mvn clean package`
 
 > Building the slim JAR is the **default
 ** packaging behaviour. If no further profiles specified, you will obtain a slim JAR.
 
 #### Fat JAR
 
-Building a fat JAR will include transitive dependencies.
+Building a fat JAR will include transitive dependencies.  
+To build a slim JAR, use: `mvn clean package -Pfat`
 
 * The jar will be larger
 * You can run the JAR as-is, with: `java jar target/Minesweeper.jar`
@@ -60,12 +60,13 @@ Building a fat JAR will include transitive dependencies.
 #### OS native
 
 Building an OS native binary will include the JRE and all transitive dependencies. It will also implicitly build a fat
-JAR as part of the process.
+JAR as part of the process.  
+To build a slim JAR, use: `mvn clean package -Pnative`
 
 * The native application will be significantly larger (~100MB)
 * You can run the application, like any other app on your computer.
 
-> Note: On MacOS the software is unsigned, i.e. you cannot transform and run the software on other computers unless ["System Integrity Protection" is manually disabled](https://developer.apple.com/documentation/security/disabling-and-enabling-system-integrity-protection).
+> Note: On MacOS the software is unsigned, i.e. you cannot transfer and run the software on other computers unless ["System Integrity Protection" is manually disabled](https://developer.apple.com/documentation/security/disabling-and-enabling-system-integrity-protection).
 
 ## Running
 
