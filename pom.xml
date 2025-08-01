@@ -20,7 +20,6 @@
         <src.dir>src</src.dir>
         <testsrc.dir>test</testsrc.dir>
         <!--By default, build only thin JAR -->
-        <skip.mavenjar.plugin>false</skip.mavenjar.plugin>
         <skip.shade.plugin>true</skip.shade.plugin>
     </properties>
 
@@ -103,21 +102,6 @@
                 </executions>
             </plugin>
 
-            <!-- The jar plugin can only build a thin jar, i.e. a jar without dependencies included. -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <skip>${skip.mavenjar.plugin}</skip>
-<!--                    <archive>-->
-<!--                        <manifest>-->
-<!--                            <mainClass>ca.mcgill.cs.swevo.minesweeper.ShadeMinesweeper</mainClass>-->
-<!--                        </manifest>-->
-<!--                    </archive>-->
-                </configuration>
-            </plugin>
-
             <!-- The shade plugin is needed to create a "self-contained / fat" jar, that is, a jar with all dependencies included.-->
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -187,7 +171,6 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <skip.mavenjar.plugin>true</skip.mavenjar.plugin>
                 <skip.shade.plugin>false</skip.shade.plugin>
             </properties>
         </profile>
@@ -199,7 +182,6 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <skip.mavenjar.plugin>true</skip.mavenjar.plugin>
                 <skip.shade.plugin>false</skip.shade.plugin>
             </properties>
             <build>
