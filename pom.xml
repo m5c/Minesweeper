@@ -19,6 +19,9 @@
         <!-- Override default location of maven source and test classes, so the match standard java project structure.-->
         <src.dir>src</src.dir>
         <testsrc.dir>test</testsrc.dir>
+        <!--By default, build only thin JAR -->
+        <skip.mavenjar.plugin>false</skip.mavenjar.plugin>
+        <skip.shade.plugin>true</skip.shade.plugin>
     </properties>
 
     <!-- legal -->
@@ -100,7 +103,22 @@
                 </executions>
             </plugin>
 
-            <!-- The shade plugin is needed to create a "self-contained" jar, that is, a jar with all dependencies included.-->
+            <!-- The jar plugin can only build a thin jar, i.e. a jar without dependencies included. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <skip>${skip.mavenjar.plugin}</skip>
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <mainClass>ca.mcgill.cs.swevo.minesweeper.ShadeMinesweeper</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+                </configuration>
+            </plugin>
+
+            <!-- The shade plugin is needed to create a "self-contained / fat" jar, that is, a jar with all dependencies included.-->
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.0</version>
@@ -111,6 +129,8 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
+                            <!-- Skip this plugin if current profile says so-->
+                            <skip>${skip.shade.plugin}</skip>
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
@@ -150,13 +170,38 @@
         </plugins>
     </build>
 
+    <!-- Definition of various build profiles, depending on what kind of deliverable you want.-->
     <profiles>
-        <!--Build profile for building native application. Is deactivated by default. To activate, use -Pnative-->
+        <!--Build profile for building slim jar (i.e. without dependencies included). Is deactivated by default. -->
+        <profile>
+            <id>slim</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <!-- No need to defined skip properties here, as this is the default profile. Values already defined at top of file. -->
+        </profile>
+        <!--Build profile for building fat jar (i.e. with dependencies included). To activate, use -Pfat-->
+        <profile>
+            <id>fat</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <skip.mavenjar.plugin>true</skip.mavenjar.plugin>
+                <skip.shade.plugin>false</skip.shade.plugin>
+            </properties>
+        </profile>
+        <!--Build profile for building native application. To activate, use -Pnative-->
+        <!-- javapackager does not support skip instruction, so we place the entire plugin within this profile, rather than activating / deactivating with flags.-->
         <profile>
             <id>native</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+            <properties>
+                <skip.mavenjar.plugin>true</skip.mavenjar.plugin>
+                <skip.shade.plugin>false</skip.shade.plugin>
+            </properties>
             <build>
                 <plugins>
                     <!-- Builds a native app based on the hosts OS at package phase: https://github.com/javapackager/JavaPackager-->
