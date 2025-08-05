@@ -11,9 +11,9 @@
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
-    <module name="JavadocMethod">
-      <property name="accessModifiers" value="protected"/>
-    </module>
+<!--    <module name="JavadocMethod">-->
+<!--      <property name="accessModifiers" value="protected"/>-->
+<!--    </module>-->
     <module name="JavadocType">
       <property name="scope" value="package"/>
     </module>
@@ -114,7 +114,7 @@
       <property name="severity" value="ignore"/>
       <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
-    <module name="GenericIllegalRegexp">
+    <module name="RegexpSinglelineJava">
       <property name="severity" value="ignore"/>
       <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
@@ -153,15 +153,15 @@
     <module name="UnnecessaryParentheses"/>
     <module name="BooleanExpressionComplexity"/>
     <module name="NPathComplexity"/>
-    <module name="PackageHtml">
-      <property name="severity" value="ignore"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
-    </module>
+<!--    <module name="PackageHtml">-->
+<!--      <property name="severity" value="ignore"/>-->
+<!--      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>-->
+<!--    </module>-->
     <module name="SuppressionCommentFilter">
       <property name="offCommentFormat" value="CSOFF\:"/>
       <property name="onCommentFormat" value="CSON\:"/>
     </module>
-    <module name="AvoidDoubleBraceInitialization"/>
+<!--    <module name="AvoidDoubleBraceInitialization"/>-->
     <module name="AvoidNoArgumentSuperConstructorCall"/>
     <module name="EqualsAvoidNull"/>
     <module name="ExplicitInitialization"/>
@@ -181,7 +181,7 @@
     <module name="NoEnumTrailingComma"/>
     <module name="NoFinalizer"/>
     <module name="PackageDeclaration"/>
-    <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
+<!--    <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>-->
     <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
     <module name="UnnecessarySemicolonInEnumeration"/>
     <module name="UnnecessarySemicolonInTryWithResources"/>
@@ -193,7 +193,7 @@
     <module name="OverloadMethodsDeclarationOrder"/>
     <module name="MissingOverride"/>
     <module name="AnnotationLocation"/>
-    <module name="JavadocMissingWhitespaceAfterAsterisk"/>
+<!--    <module name="JavadocMissingWhitespaceAfterAsterisk"/>-->
     <module name="MissingJavadocMethod"/>
     <module name="MissingJavadocType"/>
     <module name="NonEmptyAtclauseDescription">

@@ -128,29 +128,61 @@
             </plugin>
 
             <!-- Enforces respecting checkstyle as part of validate phase (pre compile)-->
-            <!-- TODO: Figure out where "module GenericIllegalRegexp" is defined. Plugin cannot parse config.-->
-            <!--            <plugin>-->
-            <!--                <groupId>org.apache.maven.plugins</groupId>-->
-            <!--                <artifactId>maven-checkstyle-plugin</artifactId>-->
-            <!--                <version>3.6.0</version>-->
-            <!--                <configuration>-->
-            <!--                    <configLocation>config/Style.xml</configLocation>-->
-            <!--                    <consoleOutput>true</consoleOutput>-->
-            <!--                    <violationSeverity>warning</violationSeverity>-->
-            <!--                    <failOnViolation>true</failOnViolation>-->
-            <!--                    <failsOnError>true</failsOnError>-->
-            <!--                    <linkXRef>false</linkXRef>-->
-            <!--                </configuration>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <id>validate</id>-->
-            <!--                        <phase>validate</phase>-->
-            <!--                        <goals>-->
-            <!--                            <goal>check</goal>-->
-            <!--                        </goals>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
+            <!-- The validate phase will fail, cancelling the build, unless checkstyle is respected in all classes -->
+            <!-- Note:  A few modules defined in Style.xml appear to be incompatible with the recent checkstyle plugin versions. These modules have been commented out. -->
+            <!-- Namely: JavadocMethod, GenericIllegalRegexp, PackageHtml, AvoidDoubleBraceInitialization, UnnecessarySemicolonAfterOuterTypeDeclaration, JavadocMissingWhitespaceAfterAsterisk -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <configLocation>config/Style.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <violationSeverity>warning</violationSeverity>
+                    <failOnViolation>true</failOnViolation>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin to ensure all functions are commented and generate javadoc (in target) -->
+            <!-- Currently the plugin is deactivated, because the code uses custom tags and has  a few methods without main comment.-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.11.2</version>
+                <configuration>
+                    <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+<!--                    <reportOutputDirectory>${project.reporting.outputDirectory}/docs-->
+<!--                    </reportOutputDirectory>-->
+                    <failOnWarnings>false</failOnWarnings>
+                    <quiet>true</quiet>
+                    <tags>
+                        <tag>
+                            <name>pre</name>
+                            <placement>a</placement>
+                            <head>Precondition:</head>
+                        </tag>
+                    </tags>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -197,6 +229,8 @@
                                 <goals>
                                     <goal>package</goal>
                                 </goals>
+                                <!-- mac code signing seems possible with a certificate: https://github.com/javapackager/JavaPackager/issues/368#issuecomment-1963078700 -->
+                                <!-- https://github.com/javapackager/JavaPackager/blob/master/docs/macosx-specific-properties.md -->
                                 <configuration>
                                     <!-- mandatory -->
                                     <mainClass>ca.mcgill.cs.swevo.minesweeper.ShadeMinesweeper</mainClass>

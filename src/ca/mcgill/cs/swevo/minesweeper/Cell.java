@@ -2,7 +2,7 @@
  * Minesweeper
  *
  * Copyright (C) 2018-2024 by Martin P. Robillard
- *     
+ *
  * See: https://github.com/prmr/Minesweeper
  *
  * This program is free software: you can redistribute it and/or modify
@@ -35,13 +35,13 @@ public class Cell
 		/**
 		 * The cell is hidden and not marked.
 		 */
-		HIDDEN, 
-		
+		HIDDEN,
+
 		/**
 		 * The cell is hidden but has been marked by the player as hiding a mine.
 		 */
 		MARKED,
-		
+
 		/**
 		 * The cell has been revealed.
 		 */
@@ -50,36 +50,39 @@ public class Cell
 
 	private boolean aIsMined; // Default false
 	private CellInteractionStatus aInteractionStatus = CellInteractionStatus.HIDDEN;
-	
+
 	/**
 	 * Create an empty cell.
 	 */
 	public Cell() {}
-	
+
 	/**
+	 * Getter to look up cell's hidden / not hidden status.
 	 * @return True if the cell is hidden, whether it is marked or not.
 	 */
-	public boolean isHidden() 
+	public boolean isHidden()
 	{
 		return aInteractionStatus != CellInteractionStatus.REVEALED;
 	}
-	
+
 	/**
+	 * Getter to look up cell's marked / not marked status.
 	 * @return True if the cell is marked.
 	 */
 	public boolean isMarked()
 	{
 		return aInteractionStatus == CellInteractionStatus.MARKED;
 	}
-	
+
 	/**
+	 * Getter to look up if cell is mined.
 	 * @return True if the cell is mined, false otherwise.
 	 */
-	public boolean isMined() 
+	public boolean isMined()
 	{
 		return aIsMined;
 	}
-	
+
 	/**
 	 * Change the status of this cell to represent a revealed cell.
 	 */
@@ -87,11 +90,11 @@ public class Cell
 	{
 		aInteractionStatus = CellInteractionStatus.REVEALED;
 	}
-	
+
 	/**
 	 * If this cell is not marked, mark it. If the cell is marked,
 	 * unmark it.
-	 * 
+	 *
 	 * @pre isHidden() == true;
 	 */
 	public void toggleMark()
