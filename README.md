@@ -8,41 +8,33 @@ This application was also designed to be simple enough to be realizable without 
 
 ![Screenshot of the Minesweeper application](Minesweeper.png)
 
-## Building this application
+## Building and Running with Eclipse
 
-This repository is a hybrid classic-java/maven project.
-
-### Classic java
-
-This repository is configured to build automatically in Eclipse with Java 21 and JavaFX 21.
-
-However, when first imported, the project will show a compilation error because the JavaFX dependency is missing.
+This repository is configured to build automatically in Eclipse with Java 21 and JavaFX 21. However, when first imported, the project will show a compilation error because the JavaFX dependency is missing.
 
 To add JavaFX:
 
 1. Download [JavaFX 21](https://jdk.java.net/javafx21/);
 2. Create a new `User Library` under `Eclipse -> Window -> Preferences -> Java -> Build Path -> User Libraries -> New`. Name it `JavaFX21` and include the jars under the `lib` folder from the location where you extracted the JavaFX download.
 
-The project should then build properly.
+The project should then build properly. To run the application within the Eclipse workspace:
 
-### Maven
+* Right-click on the project and select `Run As -> Java Application`. Select `Minesweeper` from the list. 
+* To run the tests, select `Run As - > JUnit Test`.
+
+_**MacOs Users**: When you run the application, from the run configuration, make sure the checkbox "Use the -XstartOnFirstThread argument when launching with SWT" is _not_ checked._ 
+
+## Building and Running with Maven
+
+The following commands can be run from the command line or by right-clicking on the `pom.xml` file and selecting `Run As...`.
 
 * Compiling: `mvn clean compile`
 * Testing: `mvn clean test`
 * Packaging: `mvn clean package`
- > Packaging creates a JAR-with-all-dependencies in `target/Minesweeper.jar`. Can be started with `java -jar target/Minesweeper.jar`
-* Building an OS-native app: `mvn clean package -Pnative`
+* Running: `mvn clean javafx:run@run`
 
-## Running
+Packaging creates a thin jar in `target/Minesweeper.jar`. To run the packaged application, you must have the JavaFX library downloaded somewhere, assumed to be `PATH_TO_JAVAFX_LIB`. To run the jar, open a command-line terminal window and enter the command below from the same directory where you downloaded the file, or write a script to execute it more conveniently (use `java` instead of `javaw` on OSX/Linux).
 
-The project can be started from eclipse or using maven
-
-### Running this application from the Eclipse Workspace
-
-* Right-click on the project and select `Run As -> Java Application`. Select `Minesweeper` from the list. 
-* To run the tests, select `Run As - > JUnit Test`.
-* **MacOs Users**: When you run the application, from the run configuration, make sure the checkbox "Use the -XstartOnFirstThread argument when launching with SWT" is _not_ checked. 
-
-### Maven
-
-Simply run: `mvn clean javafx:run@run`
+```
+java --module-path PATH_TO_JAVAFX_LIB --add-modules=javafx.controls -cp Minesweeper.jar ca.mcgill.cs.swevo.minesweeper.Minesweeper
+```
