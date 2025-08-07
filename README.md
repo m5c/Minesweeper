@@ -10,6 +10,10 @@ This application was also designed to be simple enough to be realizable without 
 
 ## Building this application
 
+This repository is a hybrid classic-java/maven project.
+
+### Classic java
+
 This repository is configured to build automatically in Eclipse with Java 21 and JavaFX 21.
 
 However, when first imported, the project will show a compilation error because the JavaFX dependency is missing.
@@ -21,8 +25,24 @@ To add JavaFX:
 
 The project should then build properly.
 
-## Running this application from the Eclipse Workspace
+### Maven
+
+* Compiling: `mvn clean compile`
+* Testing: `mvn clean test`
+* Packaging: `mvn clean package`
+ > Packaging creates a JAR-with-all-dependencies in `target/Minesweeper.jar`. Can be started with `java -jar target/Minesweeper.jar`
+* Building an OS-native app: `mvn clean package -Pnative`
+
+## Running
+
+The project can be started from eclipse or using maven
+
+### Running this application from the Eclipse Workspace
 
 * Right-click on the project and select `Run As -> Java Application`. Select `Minesweeper` from the list. 
 * To run the tests, select `Run As - > JUnit Test`.
 * **MacOs Users**: When you run the application, from the run configuration, make sure the checkbox "Use the -XstartOnFirstThread argument when launching with SWT" is _not_ checked. 
+
+### Maven
+
+Simply run: `mvn clean javafx:run@run`
