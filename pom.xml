@@ -44,7 +44,7 @@
 
     <build>
         <!-- Override default name of generated jars -->
-        <finalName>Minesweeper-${version}</finalName>
+        <finalName>Minesweeper-${project.version}</finalName>
 
         <!-- Override source location (default for maven is src/main/java)-->
         <sourceDirectory>${src.dir}</sourceDirectory>
