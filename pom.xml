@@ -5,7 +5,7 @@
     <groupId>ca.mcgill.cs.swevo</groupId>
     <artifactId>minesweeper</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.2</version>
     <name>Minesweeper</name>
     <url>https://github.com/prmr/Minesweeper</url>
 
@@ -44,7 +44,7 @@
 
     <build>
         <!-- Override default name of generated jars -->
-        <finalName>Minesweeper</finalName>
+        <finalName>Minesweeper-${version}</finalName>
 
         <!-- Override source location (default for maven is src/main/java)-->
         <sourceDirectory>${src.dir}</sourceDirectory>
