@@ -30,11 +30,17 @@ The following commands can be run from the command line or by right-clicking on 
 
 * Compiling: `mvn clean compile`
 * Testing: `mvn clean test`
-* Packaging: `mvn clean package`
+* Packaging: `mvn clean package` or `mvn clean package -Pfat` to create a fat jar
 * Running: `mvn clean javafx:run@run`
 
-By default,packaging creates a thin jar as `target/Minesweeper-VERSION.jar`. To run the packaged application, you must have the JavaFX library downloaded somewhere, assumed to be `PATH_TO_JAVAFX_LIB`. To run the jar, open a command-line terminal window and enter the command below from the same directory where you downloaded the file, or write a script to execute it more conveniently.
+By default,packaging creates a thin jar as `target/Minesweeper-VERSION.jar`. To run the packaged application from the thin jar, you must have the JavaFX library downloaded somewhere, assumed to be `PATH_TO_JAVAFX_LIB`. To run the jar, open a command-line terminal window and enter the command below from the same directory where you downloaded the file, or write a script to execute it more conveniently.
 
 ```
 java --module-path PATH_TO_JAVAFX_LIB --add-modules=javafx.controls -jar Minesweeper-VERSION.jar
+```
+
+To run the packaged application from the far jar, simply run the jar as:
+
+```
+java -jar Minesweeper-VERSION.jar
 ```
