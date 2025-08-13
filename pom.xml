@@ -5,7 +5,7 @@
     <groupId>ca.mcgill.cs.swevo</groupId>
     <artifactId>minesweeper</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.2</version>
     <name>Minesweeper</name>
     <url>https://github.com/prmr/Minesweeper</url>
 
@@ -14,10 +14,13 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <java.version>21</java.version>
-        <javafx.version>21</javafx.version>
+        <javafx.version>24.0.2</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <src.dir>src</src.dir>           <!-- Override default to match project structure.-->
         <testsrc.dir>test</testsrc.dir>  <!-- Override default to match project structure.-->
+        <!--By default, build only thin JAR (the flag being true skips execution
+         of shade plugin, responsible for creating a fat jar -->
+        <skip.shade.plugin>true</skip.shade.plugin>
     </properties>
 
     <licenses>
@@ -44,7 +47,7 @@
 
     <build>
         <!-- Override default name of generated jars -->
-        <finalName>Minesweeper</finalName>
+        <finalName>Minesweeper-${project.version}</finalName>
 
         <!-- Override source location (default for maven is src/main/java)-->
         <sourceDirectory>${src.dir}</sourceDirectory>
@@ -75,19 +78,70 @@
                 </executions>
             </plugin>
             <plugin>
-            	<!-- The packaging plugin is included by default. We add it here explicitly to
-            	     include the main class in the jar manifest. -->
-      			<groupId>org.apache.maven.plugins</groupId>
-      			<artifactId>maven-jar-plugin</artifactId>
-      			<version>3.3.0</version> <!-- Or latest -->
-      			<configuration>
-        			<archive>
-          				<manifest>
-            				<mainClass>ca.mcgill.cs.swevo.minesweeper.Minesweeper</mainClass>
-          				</manifest>
-        			</archive>
-      			</configuration>
-    		</plugin>
+                <!-- The packaging plugin is included by default. We add it here explicitly to
+                     include the main class in the jar manifest. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version> <!-- Or latest -->
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>ca.mcgill.cs.swevo.minesweeper.Minesweeper</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- The shade plugin is needed to create a "self-contained / fat" jar, that is,
+            a jar with all dependencies included.-->
+            <!-- Note, by default we want a slim jar, therefore this plugin has a "skip"
+            configuration set to "true" by default (property defined in project properties) -->
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Skip this plugin if current profile says so-->
+                            <skip>${skip.shade.plugin}</skip>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>ca.mcgill.cs.swevo.minesweeper.ShadeMinesweeper
+                                    </mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <!-- Definition of various build profiles, depending on what kind of deliverable is to be generated in the package phase.-->
+    <profiles>
+        <!--Build profile for building slim jar (i.e. without dependencies included). Is activated by default. -->
+        <profile>
+            <id>slim</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <!-- This profile does not need to define further properties, as the default values at the start of the pom.xml files already serve as default.-->
+        </profile>
+        <!--Build profile for building fat jar (i.e. with dependencies included). To activate, use -Pfat-->
+        <profile>
+            <id>fat</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <!-- When selected, this profile overrides the default skip value for the shade plugin ("true") to "false", which activates the shade plugin and creates a fat JAR instead of a slim jar.-->
+                <skip.shade.plugin>false</skip.shade.plugin>
+            </properties>
+        </profile>
+    </profiles>
 </project>
