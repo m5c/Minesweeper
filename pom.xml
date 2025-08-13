@@ -94,7 +94,7 @@
 
             <!-- The shade plugin is needed to create a "self-contained / fat" jar, that is,
             a jar with all dependencies included.-->
-            <!-- Note, by default we want a slim jar, therefore this plugin has a "skip"
+            <!-- Note, by default we want a thin jar, therefore this plugin has a "skip"
             configuration set to "true" by default (property defined in project properties) -->
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -109,9 +109,9 @@
                             <!-- Skip this plugin if current profile says so-->
                             <skip>${skip.shade.plugin}</skip>
                             <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ca.mcgill.cs.swevo.minesweeper.ShadeMinesweeper
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>
+                                    	ca.mcgill.cs.swevo.minesweeper.ShadeMinesweeper
                                     </mainClass>
                                 </transformer>
                             </transformers>
@@ -124,9 +124,9 @@
 
     <!-- Definition of various build profiles, depending on what kind of deliverable is to be generated in the package phase.-->
     <profiles>
-        <!--Build profile for building slim jar (i.e. without dependencies included). Is activated by default. -->
+        <!--Build profile for building thin jar (i.e. without dependencies included). Is activated by default. -->
         <profile>
-            <id>slim</id>
+            <id>thin</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -139,7 +139,8 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <!-- When selected, this profile overrides the default skip value for the shade plugin ("true") to "false", which activates the shade plugin and creates a fat JAR instead of a slim jar.-->
+                <!-- When selected, this profile overrides the default skip value for the shade plugin ("true") to "false", 
+                     which activates the shade plugin and creates a fat JAR instead of a thin jar.-->
                 <skip.shade.plugin>false</skip.shade.plugin>
             </properties>
         </profile>
