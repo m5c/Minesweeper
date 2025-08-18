@@ -40,7 +40,7 @@ public class Minefield
 	 * @param pRows The number of rows in the field.
 	 * @param pColumns The number of columns in the field.
 	 * @param pMines the number of mines in the field.
-	 * @pre pRows > 0 && pColumns > 0 && pMines >= 0 && pMines <= pColumns * pRows;
+	 * @pre pRows &gt; 0 &amp;&amp; pColumns > 0 &amp;&amp; pMines &gt;= 0 &amp;&amp; pMines &lt;= pColumns * pRows;
 	 */
 	public Minefield(int pRows, int pColumns, int pMines)
 	{

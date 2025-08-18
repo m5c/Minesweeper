@@ -35,7 +35,7 @@ public class Position
 	 * 
 	 * @param pRow The zero-indexed row of this position.
 	 * @param pColumn The zero-index column of this position.
-	 * @pre pRow >= 0 && pColumn >= 0;
+	 * @pre pRow >= 0 &amp;&amp; pColumn >= 0;
 	 */
 	public Position(int pRow, int pColumn)
 	{
