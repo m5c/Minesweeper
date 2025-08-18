@@ -51,6 +51,8 @@ public class Minefield
 	}
 	
 	/**
+	 * Getter for an all-positions iterator.
+	 *
 	 * @return An iterator over all positions in the mine field.
 	 */
 	public Iterable<Position> getAllPositions()
@@ -59,6 +61,8 @@ public class Minefield
 	}
 	
 	/**
+	 * Getter to look up MinefieldStatus of this field.
+	 *
 	 * @return A description of the current status of the mine field.
 	 */
 	public MinefieldStatus getStatus()
@@ -125,6 +129,8 @@ public class Minefield
 	}
 	
 	/**
+	 * Getter to look up if cell at a given position has already been revealed.
+	 *
 	 * @param pPosition The position to query.
 	 * @return True if the cell at pPosition is revealed.
 	 * @pre pPosition != null
@@ -136,6 +142,8 @@ public class Minefield
 	}
 	
 	/**
+	 * Getter to look up if cell at a given position has already been marked.
+	 *
 	 * @param pPosition The position to query.
 	 * @return True if the cell at pPosition is marked.
 	 * @pre pPosition != null
@@ -147,6 +155,8 @@ public class Minefield
 	}
 	
 	/**
+	 * Getter to look up if cell at a provided position is mined.
+	 *
 	 * @param pPosition The position to query.
 	 * @return True if the cell at pPosition is mined.
 	 * @pre pPosition != null

@@ -45,6 +45,8 @@ public class Position
 	}
 	
 	/**
+	 * Getter to look up row of this position object.
+	 *
 	 * @return The row index of this position.
 	 */
 	public int getRow()
@@ -53,6 +55,8 @@ public class Position
 	}
 	
 	/**
+	 * Getter to look up column of this position object.
+	 *
 	 * @return The column index of this position.
 	 */
 	public int getColumn()
