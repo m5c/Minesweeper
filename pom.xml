@@ -99,6 +99,8 @@
                 <version>3.11.2</version>
                 <configuration>
                     <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
+                    <!-- configure to produce HTML javadocs in target/docs -->
+                    <outputDirectory>${project.build.directory}/docs</outputDirectory>
                     <failOnWarnings>false</failOnWarnings>
                     <quiet>true</quiet>
                     <!-- Custom JavaDoc rule for @pre tag. -->
