@@ -92,6 +92,32 @@
                 </configuration>
             </plugin>
 
+            <!-- Enforces respecting checkstyle as part of validate phase (pre compile)-->
+            <!-- The validate phase will fail, cancelling the build, unless checkstyle is -->
+            <!-- respected in all classes -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <configLocation>config/Style.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                    <violationSeverity>warning</violationSeverity>
+                    <failOnViolation>true</failOnViolation>
+                    <failsOnError>true</failsOnError>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- The shade plugin is needed to create a "self-contained / fat" jar, that is,
             a jar with all dependencies included.-->
             <!-- Note, by default we want a thin jar, therefore this plugin has a "skip"
