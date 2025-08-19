@@ -5,7 +5,7 @@
     This configuration file was written by the eclipse-cs plugin configuration editor
 -->
 <!--
-    Checkstyle-Configuration: COMP 303 Checks
+    Checkstyle-Configuration: Minesweeper
     Description: none
 -->
 <module name="Checker">
@@ -16,11 +16,6 @@
     </module>
     <module name="JavadocType">
       <property name="scope" value="package"/>
-    </module>
-    <module name="JavadocVariable">
-      <property name="severity" value="ignore"/>
-      <property name="scope" value="protected"/>
-      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
     <module name="JavadocStyle"/>
     <module name="ConstantName"/>
@@ -112,10 +107,6 @@
       <property name="severity" value="ignore"/>
       <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
     </module>
-<!--    <module name="GenericIllegalRegexp">-->
-<!--      <property name="severity" value="ignore"/>-->
-<!--      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>-->
-<!--    </module>-->
     <module name="TodoComment">
       <property name="severity" value="ignore"/>
       <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
