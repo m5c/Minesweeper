@@ -123,6 +123,10 @@
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.6.0</version>
+                <configuration>
+                    <!-- stop spamming the base project with a fused pom -->
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
